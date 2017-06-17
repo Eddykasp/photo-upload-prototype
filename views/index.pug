@@ -1,5 +1,15 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  form(method='POST' action='/uploadPhoto')
+    input.form-control(type='text' id='userId' placeholder='Participant Number' name='userId')
+    br
+
+    input.form-control(type='password' id='password' placeholder='Password' name='password')
+    br
+
+    label(for='file') Photo: 
+    input.form-control(type='file' id='file' name='file')
+    br
+
+    button.btn.btn-primary(type='submit') Upload Photo
