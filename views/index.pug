@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  form(method='POST' action='/uploadPhoto')
+  form(method='POST' action='/uploadPhoto' enctype="multipart/form-data")
     input.form-control(type='text' id='userId' placeholder='Participant Number' name='userId')
     br
 
