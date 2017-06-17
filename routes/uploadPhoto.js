@@ -1,10 +1,17 @@
 var express = require('express');
+var uploader = require('../uploader');
+
 var router = express.Router();
 
 /* POST upload photo. */
 router.post('/', function(req, res, next){
-  console.log('post request received');
-  res.render('uploadPhoto');
+  uploader.uploadPhoto(req, res, function(err, res){
+    if (err){
+      res.render('error', {error: err});
+    } else {
+      res.render('uploadPhoto');
+    }
+  });
 })
 
 module.exports = router;

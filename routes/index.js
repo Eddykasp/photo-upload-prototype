@@ -6,4 +6,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Photomarathon Photo Upload' });
 });
 
+router.get('/index', function(req, res, next) {
+  res.render('index', { title: 'Photomarathon Photo Upload' });
+});
+
 module.exports = router;
