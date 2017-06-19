@@ -55,9 +55,15 @@ exports.createUser = function(userId, password, cb){
       iterations.toString(),
       salt,
     ];
-    console.log(usrPwdHash);
     exports.allusers.push(usrPwdHash);
-    cb(null);
+    fs.mkdir('./uploads/' + userId, function(err){
+      if (err){
+        cb(new Error('Failed to create directory for user: ' + userId));
+      } else {
+            cb(null);
+      }
+    });
+    //console.log(usrPwdHash);
   }
 
 }
@@ -77,7 +83,7 @@ exports.validateUser = function(userId, password, cb){
   var salt = user[3];
   var iterations = user[2];
   var actualKey = user[1];
-  var derivedKey = crypto.pbkdf2Sync(password, Buffer.from(salt, 'base64'), Number.parseInt(iterations), 512, 'sha512');
+  var derivedKey = crypto.pbkdf2Sync(password, Buffer.from(salt, 'base64').toString('base64'), Number.parseInt(iterations), 512, 'sha512');
   if(derivedKey.toString('hex') === actualKey){
     cb(null);
     return;
@@ -85,4 +91,26 @@ exports.validateUser = function(userId, password, cb){
     cb(new Error('Wrong Password or UserId'));
     return;
   }
+}
+
+exports.savePhoto = function(buffer, userId, cb){
+  var dir = './uploads/' + userId + '/';
+  fs.readdir(dir, function(err, dirfiles){
+    if (err) {cb(err);}
+    else{
+      var photoCount = dirfiles.length;
+      if(photoCount < 12){
+        var savePath = dir + (photoCount+1) + '.jpg';
+        fs.writeFile(savePath, buffer, function(err){
+          if (err) {cb(err)}
+          else {
+            cb(null, photoCount+1);
+          }
+        });
+
+      } else {
+        cb(new Error('Already uploaded 12 photos'));
+      }
+    }
+  });
 }

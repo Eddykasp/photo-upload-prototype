@@ -5,14 +5,16 @@ exports.uploadPhoto = function(req, res, cb){
   var userId = req.body.userId;
   var password = req.body.password;
   
-  persistence.validateUser(userId, password, function(err){
+  persistence.validateUser(userId, password, function(err, photoCount){
     if (err) {
-      cb(err);
+      cb(err, res);
     } else {
       if (req.file !== 'undefined'){
-        // TODO save file
+        persistence.savePhoto(req.file.buffer, userId, function(err, photoCount){
+          cb(null, res, photoCount);
+        });
       } else {
-        cb(new Error('Missing file'));
+        cb(new Error('Missing file'), res);
       }
     }
   });
