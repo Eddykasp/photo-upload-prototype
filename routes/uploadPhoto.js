@@ -3,7 +3,7 @@ var uploader = require('../uploader');
 var multer = require('multer');
 
 var router = express.Router();
-var upload = multer({dest: './uploads/'});
+var upload = multer();
 
 /* POST upload photo. */
 router.post('/', upload.single('file'), function(req, res, next){

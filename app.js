@@ -8,6 +8,9 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var uploadPhoto = require('./routes/uploadPhoto');
 
+var persistence = require('./persistence');
+persistence.initPersistence();
+
 var app = express();
 
 // view engine setup
