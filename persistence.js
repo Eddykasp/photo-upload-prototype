@@ -8,7 +8,7 @@ exports.initPersistence = function(){
   var input = fs.readFileSync('users.csv', 'utf-8');
   parse(input, callback = function(err, output){
     if (err) throw new Error('Error parsing users.csv');
-    if(output !== 'undefined') {
+    if(typeof output !== 'undefined') {
       exports.allusers = output;
     }
     console.log(exports.allusers);
@@ -76,7 +76,7 @@ exports.validateUser = function(userId, password, cb){
       return true;
     }
   });
-  if (user === 'undefined') {
+  if (typeof user === 'undefined') {
     cb(new Error('User does not exist'));
     return;
   }

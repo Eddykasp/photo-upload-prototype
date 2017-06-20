@@ -3,7 +3,7 @@ var uploader = require('../uploader');
 var multer = require('multer');
 
 var router = express.Router();
-var upload = multer();
+var upload = multer({limits: { fileSize: 20 * 1000 * 1000}});
 
 /* POST upload photo. */
 router.post('/', upload.single('file'), function(req, res, next){

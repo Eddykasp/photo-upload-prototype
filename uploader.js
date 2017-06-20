@@ -9,10 +9,15 @@ exports.uploadPhoto = function(req, res, cb){
     if (err) {
       cb(err, res);
     } else {
-      if (req.file !== 'undefined'){
-        persistence.savePhoto(req.file.buffer, userId, function(err, photoCount){
-          cb(null, res, photoCount);
-        });
+      if (typeof req.file !== 'undefined'){
+        if (req.file.mimetype === 'image/jpeg'){
+          persistence.savePhoto(req.file.buffer, userId, function(err, photoCount){
+            cb(null, res, photoCount);
+          });
+        } else {
+          cb(new Error('Illegal file type'));
+        }
+        
       } else {
         cb(new Error('Missing file'), res);
       }
