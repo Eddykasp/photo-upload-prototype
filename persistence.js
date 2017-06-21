@@ -11,7 +11,7 @@ exports.initPersistence = function(){
     if(typeof output !== 'undefined') {
       exports.allusers = output;
     }
-    console.log(exports.allusers);
+    //console.log(exports.allusers);
   });
 }
 
