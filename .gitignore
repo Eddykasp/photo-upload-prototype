@@ -34,3 +34,5 @@ ssl/
 
 #uploads folder
 uploads/
+
+users.csv
